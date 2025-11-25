@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptForge 隱私權政策</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 60px 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #fdcb6e;
+        }
+
+        .important {
+            background: linear-gradient(120deg, #fab1a0 0%, #ff7675 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #d63031;
+        }
+
+        .success {
+            background: linear-gradient(120deg, #55efc4 0%, #00b894 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #00b894;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 40px 20px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .toc h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 PromptForge 隱私權政策</h1>
+            <p class="subtitle">Privacy Policy</p>
+            <p class="subtitle">最後更新日期: 2025年11月25日</p>
+        </div>
+
+        <div class="content">
+            <div class="toc">
+                <h3>📑 目錄</h3>
+                <ul>
+                    <li><a href="#intro">簡介</a></li>
+                    <li><a href="#collection">資訊收集</a></li>
+                    <li><a href="#usage">資訊使用</a></li>
+                    <li><a href="#third-party">第三方服務</a></li>
+                    <li><a href="#security">資料安全</a></li>
+                    <li><a href="#retention">資料保留</a></li>
+                    <li><a href="#rights">您的權利</a></li>
+                    <li><a href="#children">兒童隱私</a></li>
+                    <li><a href="#contact">聯絡我們</a></li>
+                </ul>
+            </div>
+
+            <h2 id="intro"><span class="emoji">📋</span>簡介</h2>
+            <p>PromptForge(「我們」、「我們的」)尊重您的隱私權。本隱私權政策說明我們如何收集、使用、揭露和保護您在使用 PromptForge 行動應用程式(「應用程式」、「服務」)時的資訊。</p>
+
+            <h2 id="collection"><span class="emoji">📊</span>資訊收集</h2>
+            
+            <h3>我們收集的資訊</h3>
+            <p>PromptForge 採用「隱私優先」的設計理念,我們僅收集必要的資訊以提供服務:</p>
+
+            <h4>1. 本地儲存資訊</h4>
+            <ul>
+                <li><strong>提示詞專案資料</strong>: 您建立的專案、提示詞版本、標籤等資訊</li>
+                <li><strong>優化歷史記錄</strong>: 您的提示詞優化歷史</li>
+                <li><strong>應用程式設定</strong>: 您的偏好設定和應用程式配置</li>
+            </ul>
+
+            <div class="important">
+                <p><strong><span class="emoji">⚠️</span>重要</strong>: 這些資訊完全儲存在您的裝置本地,我們不會上傳或儲存到任何遠端伺服器。</p>
+            </div>
+
+            <h4>2. API 金鑰</h4>
+            <ul>
+                <li><strong>OpenRouter API Key</strong>: 用於呼叫 AI 優化服務</li>
+                <li><strong>儲存方式</strong>: 使用系統安全儲存機制(iOS Keychain / Android Keystore)加密儲存</li>
+                <li><strong>使用範圍</strong>: 僅用於向 OpenRouter 發送優化請求</li>
+            </ul>
+
+            <h4>3. 我們不收集的資訊</h4>
+            <div class="success">
+                <ul>
+                    <li>❌ 個人識別資訊(姓名、電子郵件、電話號碼等)</li>
+                    <li>❌ 位置資訊</li>
+                    <li>❌ 裝置識別碼</li>
+                    <li>❌ 使用分析資料</li>
+                    <li>❌ 廣告追蹤資訊</li>
+                </ul>
+            </div>
+
+            <h2 id="usage"><span class="emoji">🎯</span>資訊使用</h2>
+            
+            <h3>我們如何使用您的資訊</h3>
+            <ol>
+                <li><strong>提供核心服務</strong>
+                    <ul>
+                        <li>儲存和管理您的提示詞專案</li>
+                        <li>執行提示詞優化功能</li>
+                        <li>提供版本控制和比對功能</li>
+                    </ul>
+                </li>
+                <li><strong>改善服務品質</strong>
+                    <ul>
+                        <li>當您主動提交反饋時,我們可能會收集您提供的資訊以改善應用程式</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>我們不會做的事</h3>
+            <div class="highlight">
+                <ul>
+                    <li>❌ 出售您的資料給第三方</li>
+                    <li>❌ 用於廣告目的</li>
+                    <li>❌ 與其他公司分享(除非法律要求)</li>
+                    <li>❌ 追蹤您的使用行為</li>
+                </ul>
+            </div>
+
+            <h2 id="third-party"><span class="emoji">🔗</span>第三方服務</h2>
+            
+            <h3>OpenRouter API</h3>
+            <p>當您使用提示詞優化功能時,您的提示詞內容會透過 OpenRouter API 發送至 AI 模型進行處理。</p>
+            <ul>
+                <li><strong>服務提供商</strong>: OpenRouter (https://openrouter.ai)</li>
+                <li><strong>傳輸資料</strong>: 您的提示詞內容</li>
+                <li><strong>隱私政策</strong>: <a href="https://openrouter.ai/privacy" target="_blank">https://openrouter.ai/privacy</a></li>
+                <li><strong>資料保護</strong>: 傳輸過程使用 HTTPS 加密</li>
+            </ul>
+
+            <div class="important">
+                <p><strong><span class="emoji">⚠️</span>重要提醒</strong>:</p>
+                <ul>
+                    <li>您的 API Key 和提示詞內容僅在優化時傳送給 OpenRouter</li>
+                    <li>我們不會儲存或記錄傳送給 OpenRouter 的內容</li>
+                    <li>OpenRouter 的資料處理政策請參閱其隱私權政策</li>
+                </ul>
+            </div>
+
+            <h3>反饋功能</h3>
+            <p>當您使用應用程式內的反饋功能時:</p>
+            <ul>
+                <li>您可以選擇性地提供電子郵件地址以便我們回覆</li>
+                <li>您可以選擇性地附加截圖或檔案</li>
+                <li>這些資訊僅用於處理您的反饋,不會用於其他目的</li>
+            </ul>
+
+            <h2 id="security"><span class="emoji">🛡️</span>資料安全</h2>
+            
+            <h3>安全措施</h3>
+            <p>我們採取以下措施保護您的資訊:</p>
+
+            <ol>
+                <li><strong>本地加密儲存</strong>
+                    <ul>
+                        <li>API Key 使用系統級安全儲存(Keychain/Keystore)</li>
+                        <li>專案資料使用 Hive 本地資料庫儲存</li>
+                    </ul>
+                </li>
+                <li><strong>傳輸加密</strong>
+                    <ul>
+                        <li>所有網路請求使用 HTTPS/TLS 加密</li>
+                    </ul>
+                </li>
+                <li><strong>最小權限原則</strong>
+                    <ul>
+                        <li>應用程式僅請求必要的系統權限</li>
+                        <li>不要求存取聯絡人、相機、位置等敏感權限(除非您主動使用反饋附件功能)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2 id="retention"><span class="emoji">💾</span>資料保留</h2>
+            <ul>
+                <li><strong>本地資料</strong>: 資料保留在您的裝置上,直到您刪除應用程式或手動清除資料</li>
+                <li><strong>反饋資料</strong>: 反饋資訊保留至問題解決後的合理期間</li>
+                <li><strong>無伺服器儲存</strong>: 我們不在伺服器上儲存您的任何個人資料或提示詞內容</li>
+            </ul>
+
+            <h2 id="rights"><span class="emoji">✅</span>您的權利</h2>
+            
+            <h3>資料控制權</h3>
+            <p>您對自己的資料擁有完全控制權:</p>
+
+            <div class="success">
+                <ol>
+                    <li><strong>存取權</strong>: 所有資料儲存在您的裝置本地,您可隨時存取</li>
+                    <li><strong>修改權</strong>: 您可以隨時修改或刪除您的專案和提示詞</li>
+                    <li><strong>刪除權</strong>: 解除安裝應用程式將刪除所有本地資料</li>
+                    <li><strong>匯出權</strong>: 您可以使用分享功能匯出您的提示詞內容</li>
+                </ol>
+            </div>
+
+            <h2 id="children"><span class="emoji">👶</span>兒童隱私</h2>
+            <p>PromptForge 不針對 13 歲以下兒童。我們不會故意收集 13 歲以下兒童的個人資訊。如果您是家長或監護人,並且發現您的孩子向我們提供了個人資訊,請聯繫我們,我們將採取措施刪除該資訊。</p>
+
+            <h2><span class="emoji">🔄</span>隱私權政策變更</h2>
+            <p>我們可能會不時更新本隱私權政策。我們將透過以下方式通知您任何變更:</p>
+            <ul>
+                <li>在應用程式內發布新的隱私權政策</li>
+                <li>更新本頁面頂部的「最後更新日期」</li>
+            </ul>
+            <p>重大變更將在生效前至少 30 天通知您。</p>
+
+            <h2><span class="emoji">🌍</span>國際資料傳輸</h2>
+            <p>PromptForge 採用本地優先的設計:</p>
+            <ul>
+                <li>您的資料主要儲存在您的裝置上</li>
+                <li>僅在使用優化功能時,提示詞內容會傳送至 OpenRouter API</li>
+                <li>OpenRouter 可能在不同國家/地區處理資料,請參閱其隱私權政策</li>
+            </ul>
+
+            <h2><span class="emoji">🍪</span>Cookie 和追蹤技術</h2>
+            <p>PromptForge 行動應用程式不使用 Cookie 或類似的追蹤技術。</p>
+
+            <h2 id="contact"><span class="emoji">📧</span>聯絡我們</h2>
+            <p>如果您對本隱私權政策有任何疑問或疑慮,請透過以下方式聯繫我們:</p>
+            <ul>
+                <li><strong>應用程式內反饋</strong>: 使用應用程式內的反饋功能</li>
+                <li><strong>電子郵件</strong>: [您的聯絡電子郵件]</li>
+            </ul>
+
+            <h2><span class="emoji">⚖️</span>法律依據(適用於 GDPR)</h2>
+            <p>如果您位於歐洲經濟區(EEA),我們處理您個人資料的法律依據為:</p>
+            <ol>
+                <li><strong>合約履行</strong>: 提供您要求的服務</li>
+                <li><strong>合法利益</strong>: 改善和維護我們的服務</li>
+                <li><strong>同意</strong>: 當您主動提供反饋時</li>
+            </ol>
+
+            <h2><span class="emoji">🌟</span>加州居民權利(CCPA)</h2>
+            <p>如果您是加州居民,您享有以下權利:</p>
+            <ol>
+                <li><strong>知情權</strong>: 了解我們收集的個人資訊類別</li>
+                <li><strong>刪除權</strong>: 要求刪除您的個人資訊</li>
+                <li><strong>選擇退出權</strong>: 選擇退出個人資訊的銷售(我們不銷售個人資訊)</li>
+            </ol>
+            <p>由於 PromptForge 不收集或儲存個人識別資訊,這些權利主要透過您對本地資料的完全控制來實現。</p>
+
+            <h2><span class="emoji">🚨</span>資料洩露通知</h2>
+            <p>雖然我們不儲存您的個人資料在伺服器上,但如果發生任何可能影響您資料安全的事件,我們將:</p>
+            <ol>
+                <li>立即調查事件</li>
+                <li>在合理時間內通知受影響的使用者</li>
+                <li>採取措施防止未來發生類似事件</li>
+            </ol>
+
+            <h2><span class="emoji">📝</span>總結</h2>
+            <div class="highlight">
+                <p><strong>PromptForge 的核心理念是「隱私優先」:</strong></p>
+                <ul>
+                    <li>✅ 本地儲存,不上傳個人資料</li>
+                    <li>✅ 最小化資料收集</li>
+                    <li>✅ 透明的資料使用政策</li>
+                    <li>✅ 您完全控制自己的資料</li>
+                    <li>✅ 不追蹤、不分析、不販售</li>
+                </ul>
+                <p><strong>我們相信,保護您的隱私是建立信任的基礎。</strong></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>PromptForge 開發團隊</strong></p>
+            <p>最後更新: 2025年11月25日</p>
+            <p>版本: 1.0</p>
+            <p style="margin-top: 20px; color: #999;">© 2025 PromptForge. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
