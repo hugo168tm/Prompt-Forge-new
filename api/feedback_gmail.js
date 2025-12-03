@@ -117,12 +117,12 @@ export default async function handler(req, res) {
       to: ['hugo168tm86@gmail.com'],
       subject: `Flutter App 反饋 - ${type} [ID: ${id}]`,
       html: emailContent,
-      tags: [
-        { name: 'source', value: 'flutter_app_feedback' },
-        { name: 'feedback_type', value: type },
-        { name: 'device', value: deviceInfo || 'unknown' },
-        { name: 'user_email', value: email || 'anonymous' }
-      ]
+tags: [
+  { name: 'source', value: 'flutter_app_feedback' },
+  { name: 'feedback_type', value: type || 'general' },
+  { name: 'device', value: (deviceInfo || 'unknown').replace(/[^a-zA-Z0-9_-]/g, '_') },
+  { name: 'user_email', value: (email || 'anonymous').replace(/[^a-zA-Z0-9_-]/g, '_') }
+]
     });
 
     if (error) {
