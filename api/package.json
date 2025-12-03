@@ -1,0 +1,9 @@
+{
+  "name": "prompt-forge-api",
+  "version": "1.0.0",
+  "description": "Prompt Forge API endpoints",
+  "main": "feedback_gmail.js",
+  "dependencies": {
+    "resend": "^3.2.0"
+  }
+}
