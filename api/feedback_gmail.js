@@ -25,14 +25,14 @@ function formatHongKongTime(timestamp) {
     // 檢查是否為有效的日期
     if (isNaN(date.getTime())) {
       console.error('無效的時間戳:', timestamp);
-      return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' }) + ' (香港時間)';
+      return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' });
     }
     
     // 正確的香港時間格式化
     const options = {
       timeZone: 'Asia/Hong_Kong',
       year: 'numeric',
-      month: '2-digit', 
+      month: '2-digit',
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
@@ -41,12 +41,12 @@ function formatHongKongTime(timestamp) {
     };
     
     const hongKongTime = date.toLocaleString('zh-TW', options);
-    console.log(`時間轉換: ${timestamp} -> ${hongKongTime} (香港時間)`);
-    return hongKongTime + ' (香港時間)';
+    console.log(`時間轉換: ${timestamp} -> ${hongKongTime}`);
+    return hongKongTime;
   } catch (e) {
     console.error('時間格式化錯誤:', e);
     // 降級處理：使用當前時間
-    return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' }) + ' (香港時間)';
+    return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' });
   }
 }
 
@@ -103,9 +103,9 @@ function createEmailContent({
         attachmentsHtml += `
           <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
             <div style="position: relative; display: inline-block;">
-              <img 
-                src="${imageSrc}" 
-                alt="${fileName}" 
+              <img
+                src="${imageSrc}"
+                alt="${fileName}"
                 style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; display: block;"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
               >
@@ -115,7 +115,7 @@ function createEmailContent({
               </div>
             </div>
             <div style="font-size: 12px; color: #666; margin-top: 5px; word-break: break-all;">
-              ${fileName}<br>${sizeText}
+              ${sizeText}
             </div>
           </div>
         `;
@@ -133,6 +133,16 @@ function createEmailContent({
     });
     
     attachmentsHtml += `
+        </div>
+      </div>
+    `;
+  } else if (attachments && attachments.length > 0) {
+    // 如果有附件但沒有生成HTML（可能是數據問題），生成一個簡單列表
+    attachmentsHtml = `
+      <div style="background: #ffffff; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+        <h3 style="color: #333; margin-top: 0;">📎 附件清單 (${attachments.length}個檔案)</h3>
+        <div style="margin-top: 15px;">
+          <p style="color: #666;">無法預覽附件，請查看下方文字列表。</p>
         </div>
       </div>
     `;
