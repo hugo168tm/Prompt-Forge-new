@@ -25,7 +25,7 @@ function formatHongKongTime(timestamp) {
     // 檢查是否為有效的日期
     if (isNaN(date.getTime())) {
       console.error('無效的時間戳:', timestamp);
-      return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' });
+      return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' }) + ' (香港時間)';
     }
     
     // 正確的香港時間格式化
@@ -189,7 +189,7 @@ function createEmailContent({
 
   const textContent = `
 App 反饋通知
-==========
+===========
 
 📋 反饋詳情：
 - 🔖 反饋類型：${displayType}
