@@ -19,21 +19,34 @@ function formatFileSize(bytes) {
 // 格式化香港時間顯示
 function formatHongKongTime(timestamp) {
   try {
+    // 如果傳入的是ISO字符串，先解析為Date對象
     const date = new Date(timestamp);
+    
+    // 檢查是否為有效的日期
+    if (isNaN(date.getTime())) {
+      console.error('無效的時間戳:', timestamp);
+      return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' }) + ' (香港時間)';
+    }
+    
+    // 正確的香港時間格式化
     const options = {
       timeZone: 'Asia/Hong_Kong',
       year: 'numeric',
-      month: '2-digit',
+      month: '2-digit', 
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
       hour12: false
     };
-    return date.toLocaleString('zh-TW', options) + ' (香港時間)';
+    
+    const hongKongTime = date.toLocaleString('zh-TW', options);
+    console.log(`時間轉換: ${timestamp} -> ${hongKongTime} (香港時間)`);
+    return hongKongTime + ' (香港時間)';
   } catch (e) {
     console.error('時間格式化錯誤:', e);
-    return new Date(timestamp).toLocaleString('zh-TW');
+    // 降級處理：使用當前時間
+    return new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' }) + ' (香港時間)';
   }
 }
 
@@ -80,16 +93,26 @@ function createEmailContent({
       
       if (attachment.fileData && mimeType.startsWith('image/')) {
         // 圖片附件：顯示base64預覽
+        // 確保fileData是完整的data URI格式
+        let imageSrc = attachment.fileData;
+        if (!imageSrc.startsWith('data:')) {
+          // 如果沒有data:前綴，添加它
+          imageSrc = `data:${mimeType};base64,${imageSrc}`;
+        }
+        
         attachmentsHtml += `
           <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
-            <img 
-              src="${attachment.fileData}" 
-              alt="${fileName}" 
-              style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef;"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-            >
-            <div style="display: none; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
-              <div style="color: #6c757d; font-size: 24px;">📷</div>
+            <div style="position: relative; display: inline-block;">
+              <img 
+                src="${imageSrc}" 
+                alt="${fileName}" 
+                style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; display: block;"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+              >
+              <div style="display: none; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                <div style="color: #6c757d; font-size: 24px;">📷</div>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">圖片預覽載入失敗</div>
+              </div>
             </div>
             <div style="font-size: 12px; color: #666; margin-top: 5px; word-break: break-all;">
               ${fileName}<br>${sizeText}
