@@ -16,6 +16,27 @@ function formatFileSize(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
 
+// 格式化香港時間顯示
+function formatHongKongTime(timestamp) {
+  try {
+    const date = new Date(timestamp);
+    const options = {
+      timeZone: 'Asia/Hong_Kong',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    };
+    return date.toLocaleString('zh-TW', options) + ' (香港時間)';
+  } catch (e) {
+    console.error('時間格式化錯誤:', e);
+    return new Date(timestamp).toLocaleString('zh-TW');
+  }
+}
+
 // 創建郵件內容 - 支援新的Flutter客戶端數據格式
 function createEmailContent({ 
   type,           // 繁體中文顯示名稱 (新)
@@ -105,7 +126,7 @@ function createEmailContent({
         <h2 style="color: #333; margin-top: 0;">📋 反饋詳情</h2>
         <p><strong>🔖 反饋類型：</strong> ${displayType}</p>
         <p><strong>🆔 反饋ID：</strong> ${id}</p>
-        <p><strong>🕐 提交時間：</strong> ${new Date(timestamp).toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' })}</p>
+        <p><strong>🕐 提交時間：</strong> ${formatHongKongTime(timestamp)}</p>
         <p><strong>📧 聯絡信箱：</strong> ${email || '匿名'}</p>
       </div>
 
@@ -140,7 +161,7 @@ App 反饋通知
 📋 反饋詳情：
 - 🔖 反饋類型：${displayType}
 - 🆔 反饋ID：${id}
-- 🕐 提交時間：${new Date(timestamp).toLocaleString('zh-TW', { timeZone: 'Asia/Hong_Kong' })}
+- 🕐 提交時間：${formatHongKongTime(timestamp)}
 - 📧 聯絡信箱：${email || '匿名'}
 
 💬 反饋內容：
