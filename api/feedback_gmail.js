@@ -113,7 +113,7 @@ export default async function handler(req, res) {
 
     // 使用 Resend 發送郵件
     const { data, error } = await resend.emails.send({
-      from: 'PromptForge Feedback <feedback@yourdomain.com>',
+      from: 'PromptForge Feedback <hugo168tm86@gmail.com>',
       to: ['hugo168tm86@gmail.com'],
       subject: `Flutter App 反饋 - ${type} [ID: ${id}]`,
       html: emailContent,
