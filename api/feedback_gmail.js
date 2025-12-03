@@ -75,7 +75,7 @@ function createEmailContent({
   if (attachments && attachments.length > 0) {
     attachmentsHtml = `
       <div style="background: #ffffff; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-        <h3 style="color: #333; margin-top: 0;">📎 附件清單 (${attachments.length}個檔案)</h3>
+        <h3 style="color: #333; margin-top: 0; font-size: 18px;">📎 附件清單 (${attachments.length}個檔案)</h3>
         <div style="margin-top: 15px;">
     `;
     
@@ -109,9 +109,7 @@ function createEmailContent({
         if (mimeType.startsWith('image/')) {
           // 圖片附件：使用 CID 引用
           const contentId = `image_${index}_${Date.now()}@promptforge.dev`;
-          attachmentObj.content_id = contentId; // Resend 支援 content_id (雖然文檔未詳述，但底層通常支援)
-          // 備註：如果 Resend 不支援 content_id，圖片將作為普通附件顯示，這也是可接受的降級方案。
-          // 但為了在 HTML 中顯示，我們嘗試使用 cid
+          attachmentObj.content_id = contentId; 
           
           attachmentsHtml += `
             <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
@@ -119,7 +117,7 @@ function createEmailContent({
                 <img
                   src="cid:${contentId}"
                   alt="${fileName}"
-                  style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; display: block;"
+                  style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; display: block; cursor: pointer;"
                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                 >
                 <div style="display: none; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
@@ -159,13 +157,16 @@ function createEmailContent({
     
     attachmentsHtml += `
         </div>
+        <div style="margin-top: 10px; font-size: 12px; color: #999; text-align: center;">
+          (點擊圖片或下方附件可全屏查看)
+        </div>
       </div>
     `;
   } else if (attachments && attachments.length > 0) {
     // 如果有附件但沒有生成HTML（可能是數據問題），生成一個簡單列表
     attachmentsHtml = `
       <div style="background: #ffffff; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-        <h3 style="color: #333; margin-top: 0;">📎 附件清單 (${attachments.length}個檔案)</h3>
+        <h3 style="color: #333; margin-top: 0; font-size: 18px;">📎 附件清單 (${attachments.length}個檔案)</h3>
         <div style="margin-top: 15px;">
           <p style="color: #666;">無法預覽附件，請查看下方文字列表。</p>
         </div>
@@ -176,12 +177,12 @@ function createEmailContent({
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-        <h1 style="color: white; margin: 0; text-align: center;">🚀 App 反饋通知</h1>
+        <h1 style="color: white; margin: 0; text-align: center; font-size: 24px;">🚀 App 反饋通知</h1>
         <p style="color: white; margin: 10px 0 0 0; text-align: center; font-size: 14px;">新版本：支援圖片附件預覽功能</p>
       </div>
       
       <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-        <h2 style="color: #333; margin-top: 0;">📋 反饋詳情</h2>
+        <h2 style="color: #333; margin-top: 0; font-size: 20px;">📋 反饋詳情</h2>
         <p><strong>🔖 反饋類型：</strong> ${displayType}</p>
         <p><strong>🆔 反饋ID：</strong> ${id}</p>
         <p><strong>🕐 提交時間：</strong> ${formatHongKongTime(timestamp)}</p>
@@ -189,12 +190,12 @@ function createEmailContent({
       </div>
 
       <div style="background: #ffffff; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-        <h3 style="color: #333; margin-top: 0;">💬 反饋內容</h3>
+        <h3 style="color: #333; margin-top: 0; font-size: 18px;">💬 反饋內容</h3>
         <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; white-space: pre-wrap; border-left: 4px solid #007bff;">${message}</div>
       </div>
 
       <div style="background: #ffffff; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-        <h3 style="color: #333; margin-top: 0;">📱 系統資訊</h3>
+        <h3 style="color: #333; margin-top: 0; font-size: 18px;">📱 系統資訊</h3>
         <table style="width: 100%; border-collapse: collapse;">
           <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>📲 App版本：</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${appVersion}</td></tr>
           <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>🔧 裝置資訊：</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${deviceInfo}</td></tr>
