@@ -1,5 +1,5 @@
 // feedback_gmail.js: 使用 Resend API 發送反饋郵件
-// 升級版：支援新的Flutter客戶端數據格式和圖片附件預覽
+// 升級版：支援新的Flutter客戶端數據格式和圖片附件預覽 (使用 CID 嵌入)
 
 import { Resend } from 'resend';
 
@@ -70,6 +70,7 @@ function createEmailContent({
   // 生成附件HTML部分
   let attachmentsHtml = '';
   let attachmentsText = '';
+  const resendAttachments = []; // 用於傳遞給 Resend 的附件陣列
   
   if (attachments && attachments.length > 0) {
     attachmentsHtml = `
@@ -83,7 +84,7 @@ function createEmailContent({
     attachments.forEach((attachment, index) => {
       const fileName = attachment.fileName || `附件_${index + 1}`;
       const fileSize = attachment.fileSize || 0;
-      const mimeType = attachment.mimeType || '未知類型';
+      const mimeType = attachment.mimeType || 'application/octet-stream';
       const formattedSize = formatFileSize(fileSize);
       
       // 格式化檔案大小
@@ -91,44 +92,68 @@ function createEmailContent({
       
       attachmentsText += `  ${index + 1}. ${fileName} ${sizeText}\n`;
       
-      if (attachment.fileData && mimeType.startsWith('image/')) {
-        // 圖片附件：顯示base64預覽
-        // 確保fileData是完整的data URI格式
-        let imageSrc = attachment.fileData;
-        if (!imageSrc.startsWith('data:')) {
-          // 如果沒有data:前綴，添加它
-          imageSrc = `data:${mimeType};base64,${imageSrc}`;
-        }
-        
-        attachmentsHtml += `
-          <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
-            <div style="position: relative; display: inline-block;">
-              <img
-                src="${imageSrc}"
-                alt="${fileName}"
-                style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; display: block;"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-              >
-              <div style="display: none; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
-                <div style="color: #6c757d; font-size: 24px;">📷</div>
-                <div style="font-size: 12px; color: #666; margin-top: 5px;">圖片預覽載入失敗</div>
+      // 處理附件內容
+      let content;
+      if (attachment.fileData) {
+        // 去掉 data URI 前綴，只保留 base64 字符串
+        const base64Data = attachment.fileData.split(';base64,').pop();
+        content = Buffer.from(base64Data, 'base64');
+      }
+
+      if (content) {
+        const attachmentObj = {
+          filename: fileName,
+          content: content,
+        };
+
+        if (mimeType.startsWith('image/')) {
+          // 圖片附件：使用 CID 引用
+          const contentId = `image_${index}_${Date.now()}@promptforge.dev`;
+          attachmentObj.content_id = contentId; // Resend 支援 content_id (雖然文檔未詳述，但底層通常支援)
+          // 備註：如果 Resend 不支援 content_id，圖片將作為普通附件顯示，這也是可接受的降級方案。
+          // 但為了在 HTML 中顯示，我們嘗試使用 cid
+          
+          attachmentsHtml += `
+            <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
+              <div style="position: relative; display: inline-block;">
+                <img
+                  src="cid:${contentId}"
+                  alt="${fileName}"
+                  style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e9ecef; display: block;"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                >
+                <div style="display: none; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                  <div style="color: #6c757d; font-size: 24px;">📷</div>
+                  <div style="font-size: 12px; color: #666; margin-top: 5px;">圖片預覽載入失敗</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: #666; margin-top: 5px; word-break: break-all;">
+                ${sizeText}
               </div>
             </div>
-            <div style="font-size: 12px; color: #666; margin-top: 5px; word-break: break-all;">
-              ${sizeText}
+          `;
+        } else {
+          // 非圖片附件：顯示檔案圖示和資訊
+          attachmentsHtml += `
+            <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; min-width: 120px;">
+              <div style="color: #6c757d; font-size: 24px; margin-bottom: 8px;">📄</div>
+              <div style="font-size: 12px; color: #666; word-break: break-all;">
+                ${fileName}<br>${sizeText}
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        }
+        resendAttachments.push(attachmentObj);
       } else {
-        // 非圖片附件：顯示檔案圖示和資訊
-        attachmentsHtml += `
-          <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; min-width: 120px;">
-            <div style="color: #6c757d; font-size: 24px; margin-bottom: 8px;">📄</div>
-            <div style="font-size: 12px; color: #666; word-break: break-all;">
-              ${fileName}<br>${sizeText}
+        // 如果沒有內容，只顯示資訊
+         attachmentsHtml += `
+            <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; min-width: 120px;">
+              <div style="color: #6c757d; font-size: 24px; margin-bottom: 8px;">⚠️</div>
+              <div style="font-size: 12px; color: #666; word-break: break-all;">
+                ${fileName}<br>內容缺失
+              </div>
             </div>
-          </div>
-        `;
+          `;
       }
     });
     
@@ -210,13 +235,13 @@ ${attachmentsText}
 📩 此郵件來自 Prompt Optimizer App 反饋系統
   `;
 
-  return { subject, htmlContent, textContent };
+  return { subject, htmlContent, textContent, resendAttachments };
 }
 
 // 發送 Resend 郵件
 async function sendResendEmail(emailData) {
   try {
-    const { subject, htmlContent, textContent } = emailData;
+    const { subject, htmlContent, textContent, resendAttachments } = emailData;
     
     const response = await resend.emails.send({
       from: 'Prompt Forge <noreply@resend.dev>',
@@ -224,6 +249,7 @@ async function sendResendEmail(emailData) {
       subject: subject,
       html: htmlContent,
       text: textContent,
+      attachments: resendAttachments, // 傳遞附件
     });
     
     return {
@@ -322,7 +348,8 @@ export default async function handler(req, res) {
     const resendResult = await sendResendEmail({
       subject: emailContent.subject,
       htmlContent: emailContent.htmlContent,
-      textContent: emailContent.textContent
+      textContent: emailContent.textContent,
+      resendAttachments: emailContent.resendAttachments // 傳遞處理好的附件
     });
 
     if (resendResult.success) {
