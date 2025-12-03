@@ -7,16 +7,16 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
-  // 處理 CORS
+  // 處理 CORS  
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');                                                              
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  if (req.method !== 'POST') {
+  if (req.method !== 'POST') {        
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
     // 驗證必填欄位
     if (!message || message.trim().length < 10) {
-      return res.status(400).json({
+      return res.status(400).json({                                
         error: '請填寫所有必填欄位，且反饋內容至少 10 個字'
       });
     }
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     // 構建郵件內容
     const emailContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa;">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px 20px; text-align: center;">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px 20px; text-align: center;">                                                                                                                                                                              
           <h1 style="color: white; margin: 0; font-size: 24px; font-weight: bold;">PromptForge Flutter App</h1>
           <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">用戶反饋報告</p>
         </div>
@@ -112,10 +112,10 @@ export default async function handler(req, res) {
     `;
 
     // 使用 Resend 發送郵件
-    const { data, error } = await resend.emails.send({
-      from: 'PromptForge Feedback <hugo168tm86@gmail.com>',
+    const { data, error } = await resend.emails.send({  
+      from: 'PromptForge Feedback <onboarding@resend.dev>',                                                
       to: ['hugo168tm86@gmail.com'],
-      subject: `Flutter App 反饋 - ${type} [ID: ${id}]`,
+      subject: `Flutter App 反饋 - ${type} [ID: ${id}]`,          
       html: emailContent,
 tags: [
   { name: 'source', value: 'flutter_app_feedback' },
